@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    private float intervalINSeconds = 2f;
+    private float intervalInSeconds = 2f;
     private WaitForSeconds _wait;
 
     public event Action OnComplete;
 
     private void Awake()
     {
-        _wait = new(intervalINSeconds);
+        _wait = new(intervalInSeconds);
     }
 
     public void StartTimer()
