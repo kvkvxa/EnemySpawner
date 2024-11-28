@@ -7,7 +7,7 @@ public class ArenaSetter : MonoBehaviour
     public float Width => _planeSize.x;
     public float Length => _planeSize.z;
 
-    void Start()
+    private void Start()
     {
         GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Plane);
         floor.transform.position = Vector3.zero;
