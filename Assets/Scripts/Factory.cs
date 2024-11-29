@@ -2,7 +2,11 @@ using UnityEngine;
 
 public class Factory : MonoBehaviour
 {
-    [SerializeField] private Enemy _enemyPrefab;
+    public Enemy Create(Enemy enemyPrefab, Vector3 position, Color color)
+    {
+        Enemy newEnemy = Instantiate(enemyPrefab, position, Quaternion.identity);
+        newEnemy.SetColor(color);
 
-    public Enemy Create() => Instantiate(_enemyPrefab);
+        return newEnemy;
+    }
 }

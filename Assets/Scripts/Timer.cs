@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    private float intervalINSeconds = 2f;
+    private float _intervalInSeconds = 2f;
     private WaitForSeconds _wait;
+    private bool _autoRestart;
 
     public event Action OnComplete;
 
     private void Awake()
     {
-        _wait = new(intervalINSeconds);
+        _wait = new(_intervalInSeconds);
     }
 
-    public void StartTimer()
+    public void StartTimer(bool autoRestart = false)
     {
+        _autoRestart = autoRestart;
+        StopAllCoroutines();
         StartCoroutine(Count());
     }
 
@@ -24,5 +27,10 @@ public class Timer : MonoBehaviour
         yield return _wait;
 
         OnComplete?.Invoke();
+
+        if (_autoRestart)
+        {
+            StartCoroutine(Count());
+        }
     }
 }

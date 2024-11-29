@@ -1,21 +1,16 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Renderer))]
 public class Enemy : MonoBehaviour
 {
-    private DirectionSetter _directionSetter;
     private Vector3 _currentDirectionPoint;
-    private float _thresholdDistance = 0.2f;
-    
+    private Renderer _renderer;
+
     private float _moveSpeed = 2f;
 
     private void Awake()
     {
-        if (_directionSetter == null)
-        {
-            _directionSetter = FindObjectOfType<DirectionSetter>();
-        }
-
-        _currentDirectionPoint = _directionSetter.GetRandomDirectionPoint();
+        _renderer = GetComponent<Renderer>();
     }
 
     private void Update()
@@ -23,18 +18,18 @@ public class Enemy : MonoBehaviour
         Move(_currentDirectionPoint);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void SetColor(Color color)
     {
-        _currentDirectionPoint = _directionSetter.GetRandomDirectionPoint();
+        _renderer.material.color = color;
+    }
+
+    public void SetDirectionPoint(Vector3 directionPoint)
+    {
+        _currentDirectionPoint = directionPoint;
     }
 
     private void Move(Vector3 directionPoint)
     {
-        if (Vector3.Distance(transform.position, directionPoint) < _thresholdDistance)
-        {
-            _currentDirectionPoint = _directionSetter.GetRandomDirectionPoint();
-        }
-
         Vector3 direction = directionPoint - transform.position;
 
         transform.Translate(direction.normalized * _moveSpeed * Time.deltaTime, Space.World);
